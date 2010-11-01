@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>:: Zupka</title>
+	<head>
+		<link rel="stylesheet" href="/media/css/main.css" type="text/css" />
+		<script type="text/javascript" src="/media/js/mootools-core.js"></script>
+		<script type="text/javascript" src="/media/js/powertools-1.0.js"></script>
+		<script type="text/javascript">
+			window.addEvent('domready', function(){
+					// Some random text for testing
+					var loading = $( 'loading' )
+					var current = parseInt( $$( '.current' ).getLast().get('text') )
+					new ScrollLoader({
+						onScroll: function(){
+							var scroll = this;
+							var last = parseInt( $$('.page').getLast().get('text') )
+							scroll.detach(); // We detach the listener so it does not execute while loading
+							
+							// Now here goes some Request, this is just a simple timer to give you an idea
+							new Request.HTML({
+								append: "images",
+								onRequest: function() {
+									loading.addClass( 'active' ).set( 'text', 'Loading ' + current + ' of ' + last +  '...' )
+								},
+								onSuccess: function() {
+									loading.removeClass( 'active' )
+									if( current < last ) scroll.attach();
+								},
+								onProgress: function(event, xhr) {
+									var loaded = event.loaded, total = event.total;
+									console.log( parseInt( loaded / total * 100, 10 ) );
+								}
+							}
+							).get( "page=" + ( ++current ) )
+						}
+					});
+			});
+</script>
+
+	</head>
+	<body>
+		<div id="loading"></div>
+		<div id="images">
+		{% load pagination_tags %}
+		
+		{% include "images_part.html" %}
+
+		</div>
+		<div style="display: none;">{% paginate %}</div>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+body, a, img, form, div {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+#images {
+	padding: 20px;
+	text-align: center;
+}
+
+a img {
+	border: 5px solid white;
+	-moz-box-shadow: 2px 2px 5px #999;
+	-webkit-box-shadow: 2px 2px 5px #999;
+	box-shadow: 2px 2px 5px #999;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#loading {
+	display: none;
+	font-family: Courier, Courier New;
+	font-weight: bold;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding: 4px;
+	background-color: #D6443f;
+	color: white;
+	text-align: center;
+	-moz-box-shadow: 2px 2px 5px #999;
+	-webkit-box-shadow: 2px 2px 5px #999;
+	box-shadow: 2px 2px 5px #999;
+
+	border-radius: 0px 0px 10px 0px;
+	-moz-border-radius: 0px 0px 10px 0px;
+	-webkit-border-radius: 0px 0px 10px 0px;
+}
+#loading.active {
+	display: block;
+}
