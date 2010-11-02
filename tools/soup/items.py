@@ -6,5 +6,8 @@
 from scrapy.item import Item, Field
 
 class SoupItem(Item):
+	id = Field()
 	images = Field()
 	image_urls = Field()
+	reposted_from = Field( default=None )
+	via = Field( default=None )

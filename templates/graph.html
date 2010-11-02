@@ -1,0 +1,42 @@
+{% load thumbnail %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Graph</title>
+	<head>
+		<script type="text/javascript" src="/media/js/mootools-core.js"></script>
+		<script type="text/javascript" src="/media/js/raphael.js"></script>
+		<script type="text/javascript">
+			window.addEvent('domready', function(){
+				var width = 1200;
+				var height = 800;
+				var r = Raphael( "holder", width, height );
+				var x = 5, y = 5, w = 50, h = 50;
+
+				var c = r.circle( 1000, 80, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+				var c = r.circle( 1000, 160, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+				var c = r.circle( 1000, 240, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+				var c = r.circle( 1000, 320, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+				var c = r.circle( 1000, 400, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+				var c = r.circle( 1000, 480, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+
+				{% for image in images %}
+					var src = "{% thumbnail image.image 50x50 sharpen crop upscale %}";
+					r.image( src, x, y, w, h );
+					y += h + 5;
+					if( y >= ( height - h + 5 ) ) {
+						x += w + 5;
+						y = 5;
+					}
+				{% endfor %}
+			});
+</script>
+
+	</head>
+	<body>
+		<div id="holder">
+		</div>
+	</body>
+</html>

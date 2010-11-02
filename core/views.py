@@ -4,11 +4,15 @@ from soup_io.core.models import Author, Image
 
 def index( request ):
 	images = Image.objects.all()
+	graph = request.GET.get( 'graph', 'false' )
 
 	if request.is_ajax():
 		template = "images_part.html"
 	else:
-		template = "images.html"
+		if graph == 'true':
+			template = "graph.html"
+		else:
+			template = "images.html"
 
 	return render_to_response(
 		template, { "images": images }, context_instance = RequestContext( request )
@@ -16,12 +20,18 @@ def index( request ):
 
 def by_author( request, author ):
 	author = get_object_or_404( Author, login=author )
-	images = Image.objects.filter( author=author )
+	images = Image.objects.filter( post__author=author )
+	graph = request.GET.get( 'graph', 'false' )
 	
 	if request.is_ajax():
 		template = "images_part.html"
 	else:
-		template = "images.html"
+		if graph == 'true':
+			template = "graph.html"
+		else:
+			template = "images.html"
+
+
 
 	return render_to_response(
 		template, { "images": images }, context_instance = RequestContext( request )

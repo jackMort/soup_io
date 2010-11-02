@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Author( models.Model ):
 	login = models.CharField( _( "login" ), max_length=255 )
+	posts = models.ManyToManyField( "Post", null=True, blank=True )
 	
 	class Meta:
 		verbose_name = _( "Author" )
@@ -12,9 +13,8 @@ class Author( models.Model ):
 	def __str__( self ):
 		return self.login
 
-
 class Image( models.Model ):
-	author = models.ForeignKey( Author, verbose_name=_( "author" ) )
+	author = models.ForeignKey( Author, verbose_name=_( "author" ), related_name="image_author" )
 	url = models.CharField( _( "url" ), max_length=255 )
 	image = models.ImageField( _( "image" ), upload_to='images' )
 
@@ -25,5 +25,11 @@ class Image( models.Model ):
 	def __str__( self ):
 		return self.url
 
-# vim: fdm=marker ts=4 sw=4 sts=4
 
+class Post( models.Model ):
+	image = models.ForeignKey( Image )
+	via = models.ForeignKey( Author, blank=True, null=True )
+	original_id = models.IntegerField()
+
+
+# vim: fdm=marker ts=4 sw=4 sts=4

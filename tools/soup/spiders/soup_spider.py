@@ -1,3 +1,5 @@
+import re
+
 from scrapy.conf import settings
 from scrapy.spider import BaseSpider
 from scrapy.http import Request
@@ -15,16 +17,40 @@ class SoupSpider( BaseSpider ):
 
 	def parse( self, response ):
 		hxs = HtmlXPathSelector( response )
-		images = hxs.select( '//div[@class="content "]/div[@class="imagecontainer"]/a/img/@src' ).extract()
 
-		for image in images:
-			item = SoupItem()
-			item['image_urls'] = [image]
+		posts = hxs.select( '//div[contains(@class, "post")]' )
+		for post in posts:
+			id = post.select( '@id' ).extract()
+			if id:
+				id = int( id[0].replace( 'post', '' ) )
+				imagecontainer = post.select( './/div[@class="content-container"]/div[@class="content "]/div[@class="imagecontainer"]')
+				# if type = image
+				if imagecontainer:
 
-			yield item
+					item = SoupItem()
+					item['id'] = id
+					
+					image_url = imagecontainer.select( './/a/img/@src' ).extract()
+					if len( image_url ) == 0:
+						image_url = imagecontainer.select( './/img/@src' ).extract()
+					
+					image_url = image_url[0]
+					if re.match( "http://(.*)/(.*)/(\d+)/(.*)_(.*)_(\d+)\.(.*)", image_url ):
+						image_url = re.sub( r'_(\d+)\.', '.', image_url )
+					
+					item['image_urls'] = [ image_url ]
+
+					source = post.select( './/div[contains(@class, "source")]' )
+					if source:
+						text = source.select( 'text() ').extract()
+						authors = source.select( './/span/a/img/@title' ).extract()
+						if text and 'Reposted from' in text[0]:
+							item['reposted_from'] = authors[0]
+							if len( text ) > 1 and 'via' in text[1]:
+								item['via'] = authors[1]
+
+					yield item
 
 		more = hxs.select( '//a[@name="more"]/@href' ).extract()
-		print "images:", images, "next:", more
-
 		if len( more ) == 1:
 			yield Request( "http://%s.soup.io%s" % ( self.login, more[0] ), callback=self.parse )
