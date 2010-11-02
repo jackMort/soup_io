@@ -11,25 +11,35 @@
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
 				var width = 1200;
-				var height = 800;
+				var height = 500;
 				var r = Raphael( "holder", width, height );
-				var x = 5, y = 5, w = 50, h = 50;
 
-				var c = r.circle( 1000, 80, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-				var c = r.circle( 1000, 160, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-				var c = r.circle( 1000, 240, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-				var c = r.circle( 1000, 320, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-				var c = r.circle( 1000, 400, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-				var c = r.circle( 1000, 480, 50 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
-
-				{% for image in images %}
-					var src = "{% thumbnail image.image 50x50 sharpen crop upscale %}";
-					r.image( src, x, y, w, h );
-					y += h + 5;
-					if( y >= ( height - h + 5 ) ) {
-						x += w + 5;
-						y = 5;
+				var authors = {}
+				var getAuthor =  function( name ) {
+					if( !authors[name] ) { 
+						var x = Math.floor( Math.random() * ( width - 10 ) + 10 );
+						var y = Math.floor( Math.random() * ( height - 10 ) + 10 );
+						authors[name] = r.circle( x, y, 5 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+					} else {
+						authors[name].attr('r', authors[name].attr('r') + .2 )
 					}
+					return authors[name]
+				}
+				
+				{% for post in images %}
+					var via = {% if post.via %}"{{ post.via }}"{% else %}null{% endif %};
+					var author = getAuthor( "{{ post.author }}" );
+					var image_author = getAuthor( "{{ post.image.author }}" );
+					if( image_author != author ) {
+						if ( via ) {
+							via = getAuthor( via );
+							r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + via.attr( "cx" ) + " " + via.attr( "cy" ) ).attr( { stroke: "pink", opacity: .1 } )
+							author = via;
+						}
+						r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + image_author.attr( "cx" ) + " " + image_author.attr( "cy" ) ).attr( { stroke: "green", opacity: .1 } )
+					}
+
+					
 				{% endfor %}
 			});
 </script>
