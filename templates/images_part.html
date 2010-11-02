@@ -1,11 +1,7 @@
-{% load thumbnail %}
 {% load pagination_tags %}
 		
 {% autopaginate images 100 %}
 {% for image in images %}
-<a href="{{ image.url }}">
-	<img style="width: 100px;
-	height: 100px;" src="{% thumbnail image.image 100x100 sharpen crop upscale %}" alt="[ {{ image.author }} ]" title="[ {{ image.author }} ]" width="100" height="100"/>
-</a>
+	{% include "single_image_preview.html" %}
 {% endfor %}
 

@@ -30,6 +30,10 @@ class Post( models.Model ):
 	image = models.ForeignKey( Image )
 	via = models.ForeignKey( Author, blank=True, null=True )
 	original_id = models.IntegerField()
-
+	
+	class Meta:
+		verbose_name = _( "Post" )
+		verbose_name_plural = _( "Posts" )
+		ordering = [ "-original_id" ]
 
 # vim: fdm=marker ts=4 sw=4 sts=4
