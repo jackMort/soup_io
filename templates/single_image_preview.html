@@ -2,7 +2,7 @@
 
 {% if post %}
 <a href="{{ image.image.url }}">
-	<img  {% if image.image.author = author %}class="my"{% endif %}
+	<img id="{{ image.original_id }}"  {% if image.image.author = author %}class="my"{% endif %}
 	style="width: 100px;height: 100px;" 
 	src="{% thumbnail image.image.image 100x100 sharpen crop upscale %}" 
 	alt="[ {{ image.image.author }} ]" 
