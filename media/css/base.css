@@ -1,0 +1,146 @@
+/* CSS Reset */
+* { margin:0; padding:0; }
+body {
+	background: #e5e5e5;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: white;	
+}
+a:hover {
+	color: black;	
+}
+
+#header h1 {
+	display: block;
+	float: left;
+	width: 360px;
+	height: 100px;
+	margin-left: 10px;
+	background: url(../images/logo.png) no-repeat 0 0;
+	text-indent: -9999px;
+}
+
+#header #user {
+	height: 48px;
+	position: absolute;
+	top: 5px;
+	right: 0;
+	padding: 5px 10px 0 0;
+	font-size: .9em;
+}
+
+#header #user .box {
+	float: right;
+	padding: 5px;
+	font-weight: bold;
+	min-width: 50px;
+}
+
+#header #user .user-name a {
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size: 11px;
+	color: #3B5998;
+}
+
+#header #user .user-profile a {
+	font-weight: normal;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size: 11px;
+	color: #3B5998;
+}
+
+#header #user .logout {
+	font-size: 0.7em;
+	text-align: right;
+}
+#header #user .logout a {
+	text-decoration: underline;
+	font-weight: normal;
+	color: red;
+}
+
+#header #user .logout a:hover {
+	color: black;
+}
+
+.canvas-tl {
+	background: transparent url(../images/canvas/tl.png) no-repeat 0 0;
+	padding-left:10px;
+}
+.canvas-tr {
+	background: transparent url(../images/canvas/tr.png) no-repeat right 0;
+	padding-right:10px;
+}
+.canvas-tc {
+	background: transparent url(../images/canvas/t.png) repeat-x 0 0;
+	height:10px;
+}
+.canvas-ml {
+	background: transparent url(../images/canvas/l.png) repeat-y 0 0;
+	padding-left:10px;
+}
+.canvas-mr {
+	background: transparent url(../images/canvas/r.png) repeat-y right 0;
+	padding-right:10px;
+}
+.canvas-bl {
+	background: transparent url(../images/canvas/bl.png) no-repeat 0 0;
+	padding-left:10px;
+}
+.canvas-br {
+	background: transparent url(../images/canvas/br.png) no-repeat right 0;
+	padding-right:10px;
+}
+.canvas-bc {
+	background: transparent url(../images/canvas/b.png) repeat-x 0 0;
+	height:10px;
+}
+.canvas-body:not(.x-border-layout-ct) {
+	background    : white;
+	padding       : 5px;	
+}
+
+.round-corners {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+/** exercises **/
+.exercise-bodyrow {
+	padding: 5px;
+	padding-bottom: 25px;
+}
+.set {
+	float: left;
+	background: #3B5998;
+	color: white; 
+	text-align: right;
+	min-width: 100px;
+	padding: 3px;
+	margin: 2px;
+	box-shadow: 2px 2px 2px #888;
+	-moz-box-shadow: 2px 2px 2px #888;
+	-webkit-box-shadow: 2px 2px 2px #888;
+	/*text-shadow: 1px 1px 1px #000;*/
+}
+.set:hover {
+	box-shadow: 3px 3px 3px #888;
+	-moz-box-shadow: 3px 3px 3px #888;
+	-webkit-box-shadow: 3px 3px 3px #888;
+}
+.set .number {
+	float: left;
+	font-weight: bold;
+	color: #3B5998;
+	background: white;
+	width: 25px;
+	text-align: center;
+	margin-right: 10px;
+}
+.set .biggest {
+	font-weight: bold;
+}
+
