@@ -1,5 +1,10 @@
+from django.http import HttpResponse
 from django.template import RequestContext
+from django.core.servers.basehttp import FileWrapper
 from django.shortcuts import render_to_response, get_object_or_404
+
+import tempfile, zipfile
+
 from soup_io.core.models import Author, Image, Post
 
 def index( request ):
@@ -34,3 +39,21 @@ def by_author( request, author ):
 	return render_to_response(
 		template, { "post": True, "author": author, "images": images }, context_instance = RequestContext( request )
 	)
+
+def download( request, author ):
+	author = get_object_or_404( Author, login=author )
+	posts = Post.objects.filter( author=author )
+	
+	temp = tempfile.TemporaryFile()
+	archive = zipfile.ZipFile( temp, 'w', zipfile.ZIP_DEFLATED )
+	for post in posts:
+		archive.write( post.image )
+	archive.close()
+
+	wrapper = FileWrapper( temp )
+	response = HttpResponse( wrapper, content_type='application/zip' )
+	response['Content-Disposition'] = 'attachment; filename=%s.zip' % author
+	response['Content-Length'] = temp.tell()
+	temp.seek( 0 )
+
+	return response
