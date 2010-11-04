@@ -17,9 +17,10 @@
 				var authors = {}
 				var getAuthor =  function( name ) {
 					if( !authors[name] ) { 
-						var x = Math.floor( Math.random() * ( width - 10 ) + 10 );
-						var y = Math.floor( Math.random() * ( height - 10 ) + 10 );
+						var x = Math.floor( Math.random() * ( width - 100 ) + 10 );
+						var y = Math.floor( Math.random() * ( height - 100 ) + 10 );
 						authors[name] = r.circle( x, y, 5 ).attr( { fill: Raphael.getColor(), stroke: 'white', opacity: .5 } )
+						var t = r.text( x, y, name ).attr( { 'font-size': 7 } );
 					} else {
 						authors[name].attr('r', authors[name].attr('r') + .2 )
 					}
@@ -33,10 +34,10 @@
 					if( image_author != author ) {
 						if ( via ) {
 							via = getAuthor( via );
-							r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + via.attr( "cx" ) + " " + via.attr( "cy" ) ).attr( { stroke: "pink", opacity: .1 } )
-							author = via;
+							//r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + via.attr( "cx" ) + " " + via.attr( "cy" ) ).attr( { stroke: "pink", opacity: .1 } )
+							//author = via;
 						}
-						r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + image_author.attr( "cx" ) + " " + image_author.attr( "cy" ) ).attr( { stroke: "green", opacity: .1 } )
+						//r.path( "M"+ author.attr( 'cx' ) + " " + author.attr( "cy" ) + "L" + image_author.attr( "cx" ) + " " + image_author.attr( "cy" ) ).attr( { stroke: "green", opacity: .1 } )
 					}
 
 					
