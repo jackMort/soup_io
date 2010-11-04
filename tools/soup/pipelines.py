@@ -10,10 +10,11 @@ class SoupImages( ImagesPipeline ):
 		return 'full/%s.%s' % ( image_guid, url.split( ".")[-1] )
 
 class SoupPipeline( object ):
+	only_new = scrapy_settings.get( 'ONLY_NEW', '0' ) == '1'
 
 	def process_item(self, item, spider):
 		via = None
-
+		
 		user, created = Author.objects.get_or_create( login=scrapy_settings.get( 'LOGIN' ) )
 		if item['reposted_from']:
 			author, created = Author.objects.get_or_create( login=item['reposted_from'] )
@@ -33,6 +34,9 @@ class SoupPipeline( object ):
 		try:
 			post = Post.objects.get( original_id=item['id'] )
 			print " -- Post %s already exists ..."
+
+			if self.only_new: spider.stop();
+
 		except Post.DoesNotExist:
 			post = Post( image=image, via=via, original_id=item['id'] )
 			post.save()

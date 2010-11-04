@@ -5,59 +5,76 @@
 		<title>{% if author %}{{ author }}{% endif %} ( {{ images.count }} )</title>
 	<head>
 		<link rel="stylesheet" href="/media/css/main.css" type="text/css" />
+		
 		<script type="text/javascript" src="/media/js/mootools-core.js"></script>
 		<script type="text/javascript" src="/media/js/powertools-1.0.js"></script>
-		
-		<script type="text/javascript" src="/media/lib/remooz/ReMooz.js"></script>
-		<link rel="stylesheet" href="/media/lib/remooz/ReMooz.css" type="text/css" />
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="/media/js/fancybox/jquery.fancybox-1.3.3.js"></script>
+		<link rel="stylesheet" type="text/css" href="/media/js/fancybox/jquery.fancybox-1.3.3.css" media="screen" />
 
 		<script type="text/javascript">
+			jQuery.noConflict();
+
 			var bind_images = function() {
-				ReMooz.assign('#images a', {
-					'origin': 'img',
-					'shadow': 'onOpenEnd', // fx is faster because shadow appears after resize animation
-					'resizeFactor': 0.8, // resize to maximum 80% of screen size
-					'cutOut': false, // don't hide the original
-					'opacityResize': 0.4, // opaque resize
-					'dragging': false, // disable dragging
-					'centered': true // resize to center of the screen, not relative to the source element
-				});
-			}
+				jQuery( "#images a" ).fancybox({
+					padding: 0,
+					titlePosition: 'over',
+					transitionIn: 'elastic',
+					transitionOut: 'elastic',
+					overlayColor: '#fff'
+				})
+			};
 
 			window.addEvent('domready', function(){
 					// Some random text for testing
 					var loading = $( 'loading' )
-					var current = parseInt( $$( '.current' ).getLast().get('text') )
-					new ScrollLoader({
-						onScroll: function(){
-							var scroll = this;
-							var last = parseInt( $$('.page').getLast().get('text') )
-							scroll.detach(); // We detach the listener so it does not execute while loading
-							
-							// Now here goes some Request, this is just a simple timer to give you an idea
-							new Request.HTML({
-								append: "images",
-								onRequest: function() {
-									loading.addClass( 'active' ).set( 'text', 'Loading ' + current + ' of ' + last +  '...' )
-								},
-								onSuccess: function() {
-									loading.removeClass( 'active' )
-									if( current < last ) scroll.attach();
-								},
-								onProgress: function(event, xhr) {
-									var loaded = event.loaded, total = event.total;
-									console.log( parseInt( loaded / total * 100, 10 ) );
+					var paggable =( $$( '.current' ).getLast() !=null )
+					if( paggable ) {
+						var current = parseInt( $$( '.current' ).getLast().get('text') )
+						new ScrollLoader({
+							onScroll: function(){
+								var scroll = this;
+								var last = parseInt( $$('.page').getLast().get('text') )
+								scroll.detach(); // We detach the listener so it does not execute while loading
+								
+								// Now here goes some Request, this is just a simple timer to give you an idea
+								new Request.HTML({
+									append: "images",
+									onRequest: function() {
+										loading.addClass( 'active' ).set( 'text', 'LOADING' )
+									},
+									onSuccess: function() {
+										bind_images();
+										loading.removeClass( 'active' )
+										if( current < last ) scroll.attach();
+									},
+									onProgress: function(event, xhr) {
+										var loaded = event.loaded, total = event.total;
+										console.log( parseInt( loaded / total * 100, 10 ) );
+									}
 								}
+								).get( "page=" + ( ++current ) )
 							}
-							).get( "page=" + ( ++current ) )
-						}
-					});
+						});
+					}
+				// ..
 				bind_images();
 			});
 </script>
 
 	</head>
 	<body>
+		<div id="header">
+		{% if author %}
+			<a class="download" href="{% url soup_io.core.views.download author %}">POBIERZ WSZYSTKIE</a>
+			<h1>
+				~{{ author }} 
+			</h1>
+		{% else %}
+			<h1>seiho zuphub</h1>
+		{% endif %}
+		</div>
 		<div id="loading"></div>
 		<div id="images">
 		{% load pagination_tags %}

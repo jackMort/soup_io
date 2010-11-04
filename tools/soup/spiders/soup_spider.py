@@ -14,8 +14,14 @@ class SoupSpider( BaseSpider ):
 	start_urls = [
 		"http://%s.soup.io" % login,
 	]
+	
+	stop_flag = False
+	def stop( self ):
+		self.stop_flag = True
 
 	def parse( self, response ):
+		if self.stop_flag: return
+		
 		hxs = HtmlXPathSelector( response )
 
 		posts = hxs.select( '//div[contains(@class, "post")]' )

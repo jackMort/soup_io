@@ -6,6 +6,7 @@ body, a, img, form, div {
 
 #images {
 	padding: 20px;
+	margin-top: 50px;
 	text-align: center;
 }
 
@@ -23,24 +24,54 @@ a img.my {
 	border: 5px solid orange;
 }
 
+#header {
+	position: fixed; 
+	top: 0px; 
+	left: 0px; 
+	background: black; 
+	color: white; 
+	width: 100%;
+	-moz-box-shadow: 1px 0px 10px #000;
+	-webkit-box-shadow: 1px 0px 10px #000;
+	box-shadow: 1px 0px 10px #000;
+}
+
+#header h1 {
+	padding: 0px;
+	margin: 0px;
+	margin-left: 50px;
+	font-family: Helvetica, Verdana, Arial;
+}
+
+a.download {
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	float: right; 
+	margin: 10px; 
+	padding: 2px; 
+	font-weight: bold; 
+	text-decoration: none; 
+	font-size: 11px; 
+	background: white; 
+	color: black;
+}
+
 #loading {
 	display: none;
-	font-family: Courier, Courier New;
-	font-weight: bold;
 	position: fixed;
 	top: 0px;
-	left: 0px;
+	left: 50%;
+	width: 100px;
 	padding: 4px;
-	background-color: #D6443f;
-	color: white;
+	margin-left: -50px;
+	background-color: white;
+	color: black;
 	text-align: center;
-	-moz-box-shadow: 2px 2px 5px #999;
-	-webkit-box-shadow: 2px 2px 5px #999;
-	box-shadow: 2px 2px 5px #999;
 
-	border-radius: 0px 0px 10px 0px;
-	-moz-border-radius: 0px 0px 10px 0px;
-	-webkit-border-radius: 0px 0px 10px 0px;
+	border-radius: 0px 0px 10px 10px;
+	-moz-border-radius: 0px 0px 10px 10px;
+	-webkit-border-radius: 0px 0px 10px 10px;
 }
 #loading.active {
 	display: block;

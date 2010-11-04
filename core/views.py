@@ -1,9 +1,10 @@
+from django.conf import settings
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.servers.basehttp import FileWrapper
 from django.shortcuts import render_to_response, get_object_or_404
 
-import tempfile, zipfile
+import tempfile, zipfile, os
 
 from soup_io.core.models import Author, Image, Post
 
@@ -47,7 +48,7 @@ def download( request, author ):
 	temp = tempfile.TemporaryFile()
 	archive = zipfile.ZipFile( temp, 'w', zipfile.ZIP_DEFLATED )
 	for post in posts:
-		archive.write( post.image )
+		archive.write( "%s%s" % ( settings.HOME_DIR, post.image.image.url ), post.image.image.url.replace( "/media/images/full/", "" ) )
 	archive.close()
 
 	wrapper = FileWrapper( temp )

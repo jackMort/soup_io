@@ -1,18 +1,21 @@
 {% load thumbnail %}
 
 {% if post %}
-<a href="{{ image.image.url }}">
+<a href="{{ image.image.url }}" title="[ {% if image.image.author = author %}ty mnie dodałeś !{% else %}from {{ image.image.author }} {% if image.via %}via {{ image.via }}{% endif %}{% endif %} ]"
+>
 	<img id="{{ image.original_id }}"  {% if image.image.author = author %}class="my"{% endif %}
 	style="width: 100px;height: 100px;" 
 	src="{% thumbnail image.image.image 100x100 sharpen crop upscale %}" 
 	alt="[ {{ image.image.author }} ]" 
-	title="[ {% if image.image.author = author %}ty mnie dodałeś !{% else %}from {{ image.image.author }} {% if image.via %}via {{ image.via }}{% endif %}{% endif %} ]" width="100" height="100"/>
+	title="[ {% if image.image.author = author %}ty mnie dodałeś !{% else %}from {{ image.image.author }} {% if image.via %}via {{ image.via }}{% endif %}{% endif %} ]"
+ width="100" height="100"/>
 </a>
 {% else %}
-<a href="{{ image.url }}" {% if reposted %}class="reposted"{% endif %}>
+<a href="{{ image.url }}" title="[ {{ image.author }} ]">
 	<img style="width: 100px;height: 100px;" 
 	src="{% thumbnail image.image 100x100 sharpen crop upscale %}" 
 	alt="[ {{ image.author }} ]" 
-	title="[ {{ image.author }} ]" width="100" height="100"/>
+
+	width="100" height="100"/>
 </a>
 {% endif %}
