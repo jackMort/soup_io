@@ -7,7 +7,23 @@
 		<link rel="stylesheet" href="/media/css/main.css" type="text/css" />
 		<script type="text/javascript" src="/media/js/mootools-core.js"></script>
 		<script type="text/javascript" src="/media/js/powertools-1.0.js"></script>
+		
+		<script type="text/javascript" src="/media/lib/remooz/ReMooz.js"></script>
+		<link rel="stylesheet" href="/media/lib/remooz/ReMooz.css" type="text/css" />
+
 		<script type="text/javascript">
+			var bind_images = function() {
+				ReMooz.assign('#images a', {
+					'origin': 'img',
+					'shadow': 'onOpenEnd', // fx is faster because shadow appears after resize animation
+					'resizeFactor': 0.8, // resize to maximum 80% of screen size
+					'cutOut': false, // don't hide the original
+					'opacityResize': 0.4, // opaque resize
+					'dragging': false, // disable dragging
+					'centered': true // resize to center of the screen, not relative to the source element
+				});
+			}
+
 			window.addEvent('domready', function(){
 					// Some random text for testing
 					var loading = $( 'loading' )
@@ -36,6 +52,7 @@
 							).get( "page=" + ( ++current ) )
 						}
 					});
+				bind_images();
 			});
 </script>
 
