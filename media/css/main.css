@@ -2,6 +2,7 @@ body, a, img, form, div {
     margin: 0px;
     padding: 0px;
     border: 0px;
+	font-family: Helvetica, Verdana, Arial;
 }
 
 #images {
@@ -40,7 +41,6 @@ a img.my {
 	padding: 0px;
 	margin: 0px;
 	margin-left: 50px;
-	font-family: Helvetica, Verdana, Arial;
 }
 
 a.download {
@@ -48,11 +48,10 @@ a.download {
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	float: right; 
-	margin: 10px; 
+	margin: 12px; 
 	padding: 2px; 
-	font-weight: bold; 
 	text-decoration: none; 
-	font-size: 11px; 
+	font-size: 10px; 
 	background: white; 
 	color: black;
 }
@@ -65,10 +64,10 @@ a.download {
 	width: 100px;
 	padding: 4px;
 	margin-left: -50px;
-	background-color: white;
-	color: black;
+	background-color: Salmon;
+	color: white;
 	text-align: center;
-
+	font-size: 10px;
 	border-radius: 0px 0px 10px 10px;
 	-moz-border-radius: 0px 0px 10px 10px;
 	-webkit-border-radius: 0px 0px 10px 10px;
