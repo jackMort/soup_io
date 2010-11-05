@@ -66,8 +66,9 @@
 	</head>
 	<body>
 		<div id="header">
+			<a class="button" href="{% url soup_io.core.views.user_list %}">UŻYTKOWNICY</a>
 		{% if author %}
-			<a class="download" href="{% url soup_io.core.views.download author %}">POBIERZ WSZYSTKIE</a>
+			<a class="button" href="{% url soup_io.core.views.download author %}">POBIERZ WSZYSTKIE</a>
 			<h1>
 				~{{ author }} 
 			</h1>

@@ -41,6 +41,14 @@ def by_author( request, author ):
 		template, { "post": True, "author": author, "images": images }, context_instance = RequestContext( request )
 	)
 
+def user_list( request ):
+	users = Author.objects.filter( virtual=False )
+
+	return render_to_response(
+		"users.html", { "users": users }, context_instance = RequestContext( request )
+	)
+
+
 def download( request, author ):
 	author = get_object_or_404( Author, login=author )
 	posts = Post.objects.filter( author=author )

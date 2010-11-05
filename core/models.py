@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Author( models.Model ):
 	login = models.CharField( _( "login" ), max_length=255 )
+	virtual = models.BooleanField( _( "virtual" ), default=1 )
 	posts = models.ManyToManyField( "Post", null=True, blank=True )
 	
 	class Meta:
