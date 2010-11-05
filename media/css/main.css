@@ -23,6 +23,8 @@ span.count {
 	margin-top: 50px;
 }
 
+#images a { font-size: 10px; }
+
 a img {
 	border: 5px solid white;
 	-moz-box-shadow: 2px 2px 5px #999;
